@@ -4,11 +4,20 @@ import messageRoutes from './routes/message.routes.js';
 import dotenv  from 'dotenv';
 import { connectDb } from './lib/db.js';
 import cookieParser from 'cookie-parser';
+import cors from "cors"
 
 dotenv.config();
 const app = express();
 
 const PORT  = process.env.PORT;
+
+app.use(cors({
+    origin : "http://localhost:5173",
+    methods: ['GET', 'POST', 'PUT', 'DELETE'],
+    credentials : true,
+
+}))
+
 app.use(express.json());
 app.use(cookieParser());
 
