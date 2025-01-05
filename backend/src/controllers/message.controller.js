@@ -48,6 +48,7 @@ export const sendMessage = async (req, res) => {
             text,
             image:imageUrl
         });
+        //to do: socket.io
         await newMessage.save();
         res.status(200).json(newMessage);
     } catch (error) {
