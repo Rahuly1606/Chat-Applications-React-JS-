@@ -7,15 +7,21 @@ import SignUpPage from "./pages/SignUpPage";
 import ProfilePage from "./pages/ProfilePage";
 import SettingPage from "./pages/SettingPage";
 import { useAuthStore } from './store/useAuthStore';
+import {useThemeStore} from './store/useThemeStore';
 import {Loader} from "lucide-react"
 import { Toaster } from 'react-hot-toast';
 
 const App = () => {
   const { authUser, checkAuth, isCheckingAuth } = useAuthStore();
+  const {theme} = useThemeStore();
 
   useEffect(() => {
     checkAuth();
   }, [checkAuth]);
+
+  useEffect(() => {
+    document.documentElement.setAttribute('data-theme', theme);
+  }, [theme]);
 
   if (isCheckingAuth && !authUser) {
     return (
@@ -32,7 +38,7 @@ const App = () => {
         <Route path="/" element={authUser ? <HomePage/> : <Navigate to="/login"/>}/>
         <Route path="/signup" element={!authUser ? <SignUpPage/> : <Navigate to="/"/>}/>
         <Route path="/login" element={!authUser ? <LoginPage/> : <Navigate to="/"/>}/>
-        <Route path="/setting" element={authUser ? <SettingPage/> : <Navigate to="/login"/>}/>
+        <Route path="/settings" element={authUser ? <SettingPage/> : <Navigate to="/login"/>}/>
         <Route path="/profile" element={authUser ? <ProfilePage/> : <Navigate to="/login"/>}/>
       </Routes>
       <Toaster/>
