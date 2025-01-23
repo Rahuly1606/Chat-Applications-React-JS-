@@ -36,6 +36,7 @@ const App = () => {
     const handleAppInstalled = () => {
       console.log('App installed');
       setIsInstalled(true);
+      setDeferredPrompt(null); // Hide the install button
     };
 
     window.addEventListener('beforeinstallprompt', handleBeforeInstallPrompt);
