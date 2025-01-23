@@ -88,13 +88,13 @@ const App = () => {
   return (
     <div data-theme={theme}>
       <Navbar />
-      {/* {!isInstalled && (
+      {!isInstalled && (
         <div className="install-button-container">
           <button  onClick={handleInstallClick} className="install-button">
-            Install App
+            <img src="/install.png" alt="" />
           </button>
         </div>
-      )} */}
+      )}
 
       <Routes>
         <Route path="/" element={authUser ? <HomePage /> : <Navigate to="/login" />} />
