@@ -6,6 +6,7 @@ import MessageInput from "./MessageInput";
 import MessageSkeleton from "./skeletons/MessageSkeleton";
 import { useAuthStore } from "../store/useAuthStore";
 import { formatMessageTime } from "../lib/utils";
+import { FileText } from "lucide-react";
 
 const ChatContainer = () => {
   const {
@@ -54,7 +55,7 @@ const ChatContainer = () => {
             className={`chat ${message.senderId === authUser._id ? "chat-end" : "chat-start"}`}
             ref={messageEndRef}
           >
-            <div className=" chat-image avatar">
+            <div className="chat-image avatar">
               <div className="size-10 rounded-full border">
                 <img
                   src={
@@ -79,6 +80,27 @@ const ChatContainer = () => {
                   className="sm:max-w-[200px] rounded-md mb-2"
                 />
               )}
+              {message.file && (
+                <a 
+                  href={message.file.url} 
+                  target="_blank" 
+                  rel="noopener noreferrer"
+                  className="flex items-center gap-2 mb-2 p-2 bg-base-300 rounded-md hover:bg-base-200 transition-colors"
+                >
+                  <FileText size={20} className="text-primary" />
+                  <div className="flex flex-col">
+                    <span className="text-sm font-medium truncate max-w-[160px]">
+                      {message.file.name}
+                    </span>
+                    <span className="text-xs opacity-70">
+                      {message.file.type === "application/pdf" ? "PDF" : 
+                       message.file.type === "application/msword" ? "DOC" :
+                       message.file.type === "application/vnd.openxmlformats-officedocument.wordprocessingml.document" ? "DOCX" :
+                       message.file.type === "text/plain" ? "TXT" : "File"}
+                    </span>
+                  </div>
+                </a>
+              )}
               {message.text && <p>{message.text}</p>}
             </div>
           </div>
@@ -89,4 +111,5 @@ const ChatContainer = () => {
     </div>
   );
 };
+
 export default ChatContainer;

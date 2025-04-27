@@ -18,6 +18,11 @@ const messageSchema = new mongoose.Schema({
     image : {
         type : String
     },
+    file: {
+        url: { type: String },
+        name: { type: String },
+        type: { type: String }
+    }
 },{timestamps:true});
 
 const Message = mongoose.model("Message",messageSchema);

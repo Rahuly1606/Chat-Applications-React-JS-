@@ -21,7 +21,6 @@ export const useAuthStore = create((set, get) => ({
       set({ authUser: res.data });
       get().connectSocket();
     } catch (error) {
-      console.log("Error in checkAuth:", error);
       set({ authUser: null });
     } finally {
       set({ isCheckingAuth: false });
@@ -36,7 +35,8 @@ export const useAuthStore = create((set, get) => ({
       toast.success("Account created successfully");
       get().connectSocket();
     } catch (error) {
-      toast.error(error.response.data.message);
+      const errorMessage = error.response?.data?.message || "Error creating account. Please try again.";
+      toast.error(errorMessage);
     } finally {
       set({ isSigningUp: false });
     }
@@ -51,7 +51,8 @@ export const useAuthStore = create((set, get) => ({
 
       get().connectSocket();
     } catch (error) {
-      toast.error(error.response.data.message);
+      const errorMessage = error.response?.data?.message || "Error logging in. Please try again.";
+      toast.error(errorMessage);
     } finally {
       set({ isLoggingIn: false });
     }
@@ -64,7 +65,9 @@ export const useAuthStore = create((set, get) => ({
       toast.success("Logged out successfully");
       get().disconnectSocket();
     } catch (error) {
-      toast.error(error.response.data.message);
+      console.error("Logout error:", error);
+      const errorMessage = error.response?.data?.message || "Error logging out. Please try again.";
+      toast.error(errorMessage);
     }
   },
 
@@ -75,8 +78,9 @@ export const useAuthStore = create((set, get) => ({
       set({ authUser: res.data });
       toast.success("Profile updated successfully");
     } catch (error) {
-      console.log("error in update profile:", error);
-      toast.error(error.response.data.message);
+      console.error("Error updating profile:", error);
+      const errorMessage = error.response?.data?.message || "Error updating profile. Please try again.";
+      toast.error(errorMessage);
     } finally {
       set({ isUpdatingProfile: false });
     }

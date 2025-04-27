@@ -95,7 +95,12 @@ export const updateProfile = async(req,res)=>{
     if(!profilePic){
         return res.status(400).json({message:"Profile Pic is required"});
     }
-    const uploadedResponse = await cloudinary.uploader.upload(profilePic);
+    // Set higher upload limits for profile picture (10MB)
+    const uploadedResponse = await cloudinary.uploader.upload(profilePic, {
+        resource_type: "image",
+        max_file_size: 10000000, // 10MB in bytes
+        quality: "auto"
+    });
     const updatedUser = await User.findByIdAndUpdate(userId,{profilePic:uploadedResponse.secure_url},{new:true});
     res.status(200).json(updatedUser)
    } catch (error) {

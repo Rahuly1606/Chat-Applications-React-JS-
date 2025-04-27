@@ -11,7 +11,7 @@ import { useAuthStore } from "./store/useAuthStore";
 import { useThemeStore } from "./store/useThemeStore";
 import { useEffect, useState } from "react";
 
-import { Loader } from "lucide-react";
+import { Download, Loader, Sparkles } from "lucide-react";
 import { Toaster } from "react-hot-toast";
 
 const App = () => {
@@ -96,8 +96,11 @@ const App = () => {
       <Navbar />
       {!isInstalled && (
         <div className="install-button-container">
-          <button  onClick={handleInstallClick} className="install-button">
-            <img src="/install.png" alt="" />
+          <button onClick={handleInstallClick} className="install-button">
+            <div className="relative">
+              <Download className="size-6 text-white" strokeWidth={2.5} />
+              <Sparkles className="size-3 text-yellow-300 absolute -top-1 -right-1" strokeWidth={2.5} />
+            </div>
           </button>
         </div>
       )}
