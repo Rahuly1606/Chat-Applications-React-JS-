@@ -9,10 +9,21 @@ const Sidebar = () => {
   const { onlineUsers = [] } = useAuthStore(); // Default to an empty array if undefined
   const [showOnlineOnly, setShowOnlineOnly] = useState(false);
   const [showFilterOptions, setShowFilterOptions] = useState(false);
+  const [isMobile, setIsMobile] = useState(window.innerWidth < 768);
 
   useEffect(() => {
     getUsers();
   }, [getUsers]);
+
+  // Detect mobile screen
+  useEffect(() => {
+    const handleResize = () => {
+      setIsMobile(window.innerWidth < 768);
+    };
+
+    window.addEventListener('resize', handleResize);
+    return () => window.removeEventListener('resize', handleResize);
+  }, []);
 
   const filteredUsers = showOnlineOnly
     ? users.filter((user) => onlineUsers.includes(user._id))
@@ -55,62 +66,65 @@ const Sidebar = () => {
         )}
       </div>
 
-      <div className="w-full py-2">
-        {filteredUsers.map((user) => (
-          <button
-            key={user._id}
-            onClick={() => setSelectedUser(user)}
-            className={`
-              w-full py-3 px-4 flex items-center gap-3
-              hover:bg-base-300 transition-colors rounded-lg mx-2 my-1
-              ${selectedUser?._id === user._id ? "bg-base-300 ring-1 ring-base-300" : ""}
-            `}
-          >
-            <div className="relative">
-              <img
-                src={user.profilePic || "/avatar.jpg"}
-                alt={user.name}
-                className="size-12 object-cover rounded-full"
-              />
-              {onlineUsers.includes(user._id) && (
-                <span
-                  className="absolute bottom-0 right-0 size-3 bg-green-500 
-                  rounded-full ring-2 ring-base-100"
+      {/* User list container - with scrolling only on mobile */}
+      <div className={`w-full py-2 ${isMobile ? 'flex-1 overflow-y-auto' : ''}`}>
+        <div className={isMobile ? 'pb-20' : ''}>
+          {filteredUsers.map((user) => (
+            <button
+              key={user._id}
+              onClick={() => setSelectedUser(user)}
+              className={`
+                w-full py-3 px-4 flex items-center gap-3
+                hover:bg-base-300 transition-colors rounded-lg mx-2 my-1
+                ${selectedUser?._id === user._id ? "bg-base-300 ring-1 ring-base-300" : ""}
+              `}
+            >
+              <div className="relative">
+                <img
+                  src={user.profilePic || "/avatar.jpg"}
+                  alt={user.name}
+                  className="size-12 object-cover rounded-full"
                 />
-              )}
-            </div>
-
-            {/* User info - visible on all screen sizes now */}
-            <div className="text-left min-w-0 flex-1">
-              <div className="font-medium truncate">{user.fullName}</div>
-              <div className="text-sm text-base-content/60 flex items-center gap-1">
-                {onlineUsers.includes(user._id) ? (
-                  <>
-                    <span className="size-2 bg-green-500 rounded-full inline-block"></span> 
-                    <span>Online</span>
-                  </>
-                ) : (
-                  "Offline"
+                {onlineUsers.includes(user._id) && (
+                  <span
+                    className="absolute bottom-0 right-0 size-3 bg-green-500 
+                    rounded-full ring-2 ring-base-100"
+                  />
                 )}
               </div>
-            </div>
-          </button>
-        ))}
 
-        {filteredUsers.length === 0 && (
-          <div className="text-center text-base-content/60 py-8">
-            <Users className="size-12 mx-auto mb-3 opacity-20" />
-            <p>No users found</p>
-            {showOnlineOnly && (
-              <button 
-                onClick={() => setShowOnlineOnly(false)}
-                className="btn btn-sm btn-outline mt-2"
-              >
-                Show all users
-              </button>
-            )}
-          </div>
-        )}
+              {/* User info - visible on all screen sizes now */}
+              <div className="text-left min-w-0 flex-1">
+                <div className="font-medium truncate">{user.fullName}</div>
+                <div className="text-sm text-base-content/60 flex items-center gap-1">
+                  {onlineUsers.includes(user._id) ? (
+                    <>
+                      <span className="size-2 bg-green-500 rounded-full inline-block"></span> 
+                      <span>Online</span>
+                    </>
+                  ) : (
+                    "Offline"
+                  )}
+                </div>
+              </div>
+            </button>
+          ))}
+
+          {filteredUsers.length === 0 && (
+            <div className="text-center text-base-content/60 py-8">
+              <Users className="size-12 mx-auto mb-3 opacity-20" />
+              <p>No users found</p>
+              {showOnlineOnly && (
+                <button 
+                  onClick={() => setShowOnlineOnly(false)}
+                  className="btn btn-sm btn-outline mt-2"
+                >
+                  Show all users
+                </button>
+              )}
+            </div>
+          )}
+        </div>
       </div>
     </aside>
   );

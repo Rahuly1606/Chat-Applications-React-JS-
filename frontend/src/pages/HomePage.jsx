@@ -46,7 +46,9 @@ const HomePage = () => {
                   </div>
                 </div>
               ) : (
-                <Sidebar />
+                <div className="w-full h-full flex flex-col">
+                  <Sidebar />
+                </div>
               )
             ) : (
               // For desktop: show both sidebar and chat
