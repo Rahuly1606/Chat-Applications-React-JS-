@@ -45,18 +45,18 @@ const ChatContainer = () => {
   }
 
   return (
-    <div className="flex-1 flex flex-col overflow-auto">
+    <div className="flex-1 flex flex-col overflow-auto h-full">
       <ChatHeader />
 
-      <div className="flex-1 overflow-y-auto p-4 space-y-4">
-        {messages.map((message) => (
+      <div className="flex-1 overflow-y-auto p-2 sm:p-4 space-y-3">
+        {messages.map((message, index) => (
           <div
             key={message._id}
             className={`chat ${message.senderId === authUser._id ? "chat-end" : "chat-start"}`}
-            ref={messageEndRef}
+            ref={index === messages.length - 1 ? messageEndRef : null}
           >
             <div className="chat-image avatar">
-              <div className="size-10 rounded-full border">
+              <div className="w-8 h-8 sm:w-10 sm:h-10 rounded-full border">
                 <img
                   src={
                     message.senderId === authUser._id
@@ -72,12 +72,12 @@ const ChatContainer = () => {
                 {formatMessageTime(message.createdAt)}
               </time>
             </div>
-            <div className="chat-bubble flex flex-col">
+            <div className="chat-bubble flex flex-col max-w-[85%] sm:max-w-[75%]">
               {message.image && (
                 <img
                   src={message.image}
                   alt="Attachment"
-                  className="sm:max-w-[200px] rounded-md mb-2"
+                  className="max-w-full sm:max-w-[200px] rounded-md mb-2"
                 />
               )}
               {message.file && (
@@ -87,9 +87,9 @@ const ChatContainer = () => {
                   rel="noopener noreferrer"
                   className="flex items-center gap-2 mb-2 p-2 bg-base-300 rounded-md hover:bg-base-200 transition-colors"
                 >
-                  <FileText size={20} className="text-primary" />
-                  <div className="flex flex-col">
-                    <span className="text-sm font-medium truncate max-w-[160px]">
+                  <FileText size={18} className="text-primary flex-shrink-0" />
+                  <div className="flex flex-col min-w-0">
+                    <span className="text-sm font-medium truncate max-w-[150px] sm:max-w-[200px]">
                       {message.file.name}
                     </span>
                     <span className="text-xs opacity-70">
@@ -101,10 +101,18 @@ const ChatContainer = () => {
                   </div>
                 </a>
               )}
-              {message.text && <p>{message.text}</p>}
+              {message.text && <p className="break-words">{message.text}</p>}
             </div>
           </div>
         ))}
+        {messages.length === 0 && (
+          <div className="flex items-center justify-center h-full">
+            <div className="text-center text-base-content/60 p-4">
+              <p>No messages yet</p>
+              <p className="text-sm mt-1">Send a message to start the conversation</p>
+            </div>
+          </div>
+        )}
       </div>
 
       <MessageInput />

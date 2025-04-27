@@ -168,22 +168,22 @@ const MessageInput = () => {
             onChange={handleFileChange}
           />
 
-          {/* Image upload button */}
+          {/* Image upload button - Now visible on mobile */}
           <button
             type="button"
-            className={`hidden sm:flex btn btn-circle ${imagePreview ? "text-emerald-500" : "text-zinc-400"}`}
+            className={`flex btn btn-circle ${imagePreview ? "text-emerald-500" : "text-zinc-400"}`}
             onClick={() => imageInputRef.current?.click()}
           >
-            <Image size={20} />
+            <Image size={18} />
           </button>
 
-          {/* File upload button */}
+          {/* File upload button - Now visible on mobile */}
           <button
             type="button"
-            className={`hidden sm:flex btn btn-circle ${fileAttachment ? "text-emerald-500" : "text-zinc-400"}`}
+            className={`flex btn btn-circle ${fileAttachment ? "text-emerald-500" : "text-zinc-400"}`}
             onClick={() => fileInputRef.current?.click()}
           >
-            <PaperclipIcon size={20} />
+            <PaperclipIcon size={18} />
           </button>
         </div>
         <button
