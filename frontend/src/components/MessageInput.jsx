@@ -100,25 +100,25 @@ const MessageInput = () => {
   };
 
   return (
-    <div className="px-2 py-3 sm:p-4 w-full border-t border-base-300">
+    <div className="px-1 py-2 sm:px-2 sm:py-3 md:p-4 w-full border-t border-base-300">
       {/* Attachments section - horizontal scroll on mobile */}
       {(imagePreview || fileAttachment) && (
-        <div className="mb-3 flex items-center gap-2 overflow-x-auto pb-2 scrollbar-none">
+        <div className="mb-2 sm:mb-3 flex items-center gap-1.5 sm:gap-2 overflow-x-auto pb-1.5 sm:pb-2 scrollbar-none">
           {/* Image Preview */}
           {imagePreview && (
             <div className="relative flex-shrink-0">
               <img
                 src={imagePreview}
                 alt="Preview"
-                className="w-16 h-16 sm:w-20 sm:h-20 object-cover rounded-lg border border-base-300"
+                className="w-14 h-14 sm:w-16 sm:h-16 md:w-20 md:h-20 object-cover rounded-lg border border-base-300"
               />
               <button
                 onClick={removeImage}
-                className="absolute -top-1.5 -right-1.5 w-6 h-6 rounded-full bg-base-300
+                className="absolute -top-1 -right-1 sm:-top-1.5 sm:-right-1.5 w-5 h-5 sm:w-6 sm:h-6 rounded-full bg-base-300
                 flex items-center justify-center shadow-md"
                 type="button"
               >
-                <X className="size-3.5" />
+                <X className="size-3 sm:size-3.5" />
               </button>
             </div>
           )}
@@ -126,17 +126,17 @@ const MessageInput = () => {
           {/* File Attachment Preview */}
           {fileAttachment && (
             <div className="relative flex-shrink-0">
-              <div className="flex items-center gap-2 py-2 px-3 border border-base-300 rounded-lg bg-base-200 h-16">
-                <FileText className="text-primary" size={20} />
-                <span className="text-sm font-medium truncate max-w-[120px] sm:max-w-[180px]">{fileAttachment.name}</span>
+              <div className="flex items-center gap-1 sm:gap-2 py-1.5 sm:py-2 px-2 sm:px-3 border border-base-300 rounded-lg bg-base-200 h-14 sm:h-16">
+                <FileText className="text-primary" size={16} />
+                <span className="text-xs sm:text-sm font-medium truncate max-w-[100px] sm:max-w-[120px] md:max-w-[180px]">{fileAttachment.name}</span>
               </div>
               <button
                 onClick={removeFile}
-                className="absolute -top-1.5 -right-1.5 w-6 h-6 rounded-full bg-base-300
+                className="absolute -top-1 -right-1 sm:-top-1.5 sm:-right-1.5 w-5 h-5 sm:w-6 sm:h-6 rounded-full bg-base-300
                 flex items-center justify-center shadow-md"
                 type="button"
               >
-                <X className="size-3.5" />
+                <X className="size-3 sm:size-3.5" />
               </button>
             </div>
           )}
@@ -144,10 +144,10 @@ const MessageInput = () => {
       )}
 
       <form onSubmit={handleSendMessage} className="flex items-center gap-1 sm:gap-2">
-        <div className="flex-1 flex gap-1 sm:gap-2 items-center bg-base-200 rounded-full pl-4 pr-1 py-1">
+        <div className="flex-1 flex gap-0.5 sm:gap-1 md:gap-2 items-center bg-base-200 rounded-full pl-2.5 sm:pl-3 md:pl-4 pr-0.5 sm:pr-1 py-0.5 sm:py-1">
           <input
             type="text"
-            className="flex-1 bg-transparent border-none outline-none text-base-content placeholder:text-base-content/50"
+            className="flex-1 bg-transparent border-none outline-none text-sm sm:text-base text-base-content placeholder:text-base-content/50 min-w-0"
             placeholder="Type a message..."
             value={text}
             onChange={(e) => setText(e.target.value)}
@@ -174,19 +174,19 @@ const MessageInput = () => {
             {/* Image upload button */}
             <button
               type="button"
-              className={`flex-shrink-0 h-9 w-9 sm:h-10 sm:w-10 flex items-center justify-center rounded-full ${imagePreview ? "text-primary" : "text-base-content/70 hover:bg-base-300"}`}
+              className={`flex-shrink-0 h-7 w-7 sm:h-8 sm:w-8 md:h-9 md:w-9 flex items-center justify-center rounded-full ${imagePreview ? "text-primary" : "text-base-content/70 hover:bg-base-300"}`}
               onClick={() => imageInputRef.current?.click()}
             >
-              <Image size={18} />
+              <Image size={16} className="sm:size-18" />
             </button>
 
             {/* File upload button */}
             <button
               type="button"
-              className={`flex-shrink-0 h-9 w-9 sm:h-10 sm:w-10 flex items-center justify-center rounded-full ${fileAttachment ? "text-primary" : "text-base-content/70 hover:bg-base-300"}`}
+              className={`flex-shrink-0 h-7 w-7 sm:h-8 sm:w-8 md:h-9 md:w-9 flex items-center justify-center rounded-full ${fileAttachment ? "text-primary" : "text-base-content/70 hover:bg-base-300"}`}
               onClick={() => fileInputRef.current?.click()}
             >
-              <PaperclipIcon size={18} />
+              <PaperclipIcon size={16} className="sm:size-18" />
             </button>
           </div>
         </div>
@@ -194,10 +194,10 @@ const MessageInput = () => {
         {/* Send button */}
         <button
           type="submit"
-          className={`btn btn-circle btn-primary ${!text.trim() && !imagePreview && !fileAttachment ? 'opacity-70' : ''}`}
+          className={`btn btn-circle btn-sm sm:btn-md btn-primary ${!text.trim() && !imagePreview && !fileAttachment ? 'opacity-70' : ''}`}
           disabled={!text.trim() && !imagePreview && !fileAttachment}
         >
-          <Send size={18} />
+          <Send size={16} className="sm:size-18" />
         </button>
       </form>
     </div>
