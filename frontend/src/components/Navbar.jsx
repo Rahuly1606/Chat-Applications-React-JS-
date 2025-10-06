@@ -1,6 +1,6 @@
 import { Link } from "react-router-dom";
 import { useAuthStore } from "../store/useAuthStore";
-import { Download, LogOut, MessageSquare, Settings, Sparkles, User } from "lucide-react";
+import { Download, LogOut, MessageSquare, Settings, User } from "lucide-react";
 import { useEffect, useState } from "react";
 
 const Navbar = () => {
@@ -31,11 +31,11 @@ const Navbar = () => {
       window.removeEventListener('appinstalled', handleAppInstalled);
     };
   }, []);
-  
+
   const handleInstallClick = () => {
     if (deferredPrompt) {
       deferredPrompt.prompt();
-      deferredPrompt.userChoice.then((choiceResult) => {
+      deferredPrompt.userChoice.then(() => {
         setDeferredPrompt(null);
       });
     }
@@ -60,8 +60,8 @@ const Navbar = () => {
           <div className="flex items-center gap-2">
             {/* Install Button - Only shows if not installed */}
             {!isInstalled && deferredPrompt && (
-              <button 
-                onClick={handleInstallClick} 
+              <button
+                onClick={handleInstallClick}
                 className="btn btn-sm btn-primary gap-1"
               >
                 <Download size={16} />
