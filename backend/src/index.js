@@ -17,7 +17,9 @@ const __dirname = path.dirname(__filename);
 const PORT = process.env.PORT;
 
 const corsOptions = {
-  origin: ['http://localhost:5174', 'http://localhost:5173'], // Allow both origins
+  origin: process.env.NODE_ENV === "production"
+    ? [process.env.FRONTEND_URL || "https://your-app.vercel.app"]
+    : ['http://localhost:5174', 'http://localhost:5173'],
   methods: 'GET,HEAD,PUT,PATCH,POST,DELETE',
   credentials: true,
   optionsSuccessStatus: 204
