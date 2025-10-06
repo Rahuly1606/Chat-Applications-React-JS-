@@ -39,16 +39,16 @@ const Sidebar = () => {
             <MessageCircle className="size-5 text-primary" />
             <span className="font-medium text-lg">Chats</span>
           </div>
-          
+
           {/* Mobile filter toggle */}
-          <button 
+          <button
             onClick={() => setShowFilterOptions(!showFilterOptions)}
             className="btn btn-sm btn-circle"
           >
             <Filter size={18} className={showOnlineOnly ? "text-primary" : ""} />
           </button>
         </div>
-        
+
         {/* Filters - Now toggleable on mobile */}
         {showFilterOptions && (
           <div className="mt-3 flex items-center gap-2 animate-fadeIn">
@@ -66,9 +66,9 @@ const Sidebar = () => {
         )}
       </div>
 
-      {/* User list container - with scrolling only on mobile */}
-      <div className={`w-full py-2 ${isMobile ? 'flex-1 overflow-y-auto' : ''}`}>
-        <div className={isMobile ? 'pb-20' : ''}>
+      {/* User list container - with proper scrolling */}
+      <div className="flex-1 overflow-y-auto w-full py-2">
+        <div className="pb-2">
           {filteredUsers.map((user) => (
             <button
               key={user._id}
@@ -99,7 +99,7 @@ const Sidebar = () => {
                 <div className="text-sm text-base-content/60 flex items-center gap-1">
                   {onlineUsers.includes(user._id) ? (
                     <>
-                      <span className="size-2 bg-green-500 rounded-full inline-block"></span> 
+                      <span className="size-2 bg-green-500 rounded-full inline-block"></span>
                       <span>Online</span>
                     </>
                   ) : (
@@ -115,7 +115,7 @@ const Sidebar = () => {
               <Users className="size-12 mx-auto mb-3 opacity-20" />
               <p>No users found</p>
               {showOnlineOnly && (
-                <button 
+                <button
                   onClick={() => setShowOnlineOnly(false)}
                   className="btn btn-sm btn-outline mt-2"
                 >
